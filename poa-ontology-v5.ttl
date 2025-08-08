@@ -1,0 +1,613 @@
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix poa: <http://planificacion.org/poa#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix qb: <http://purl.org/linked-data/cube#> .
+
+
+<http://planificacion.org/poa> rdf:type owl:Ontology .
+
+<http://www.geonames.org/ontology#Feature> rdf:type owl:Class ;
+  rdfs:label "Feature"@en ;
+  rdfs:comment "A geographical feature"@en .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://www.w3.org/2004/02/skos/core#prefLabel
+skos:prefLabel rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.w3.org/2001/XMLSchema#gYear
+xsd:gYear rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://planificacion.org/poa#belongsToOperationalActivity
+poa:belongsToOperationalActivity rdf:type owl:ObjectProperty ;
+                                 owl:inverseOf poa:hasBudgetedActivity ;
+                                 rdfs:domain poa:BudgetedActivity ;
+                                 rdfs:range poa:OperationalActivity ;
+                                 rdfs:label "pertenece a actividad operativa"@es , "belongs to operational activity"@en ;
+                                 skos:prefLabel "pertenece a actividad operativa"@es , "belongs to operational activity"@en .
+
+
+###  http://planificacion.org/poa#belongsToPoa
+poa:belongsToPoa rdf:type owl:ObjectProperty ;
+                 rdfs:domain poa:Program ;
+                 rdfs:range poa:AnnualOperationalPlan ;
+                 rdfs:label "pertenece al POA"@es , "belongs to POA"@en ;
+                 skos:prefLabel "pertenece al POA"@es , "belongs to POA"@en .
+
+
+###  http://planificacion.org/poa#belongsToProgram
+poa:belongsToProgram rdf:type owl:ObjectProperty ;
+                     owl:inverseOf poa:hasSubprogram ;
+                     rdfs:domain poa:Subprogram ;
+                     rdfs:range poa:Program ;
+                     rdfs:label "pertenece al Programa"@es , "belongs to Program"@en ;
+                     skos:prefLabel "pertenece al Programa"@es , "belongs to Program"@en.
+
+
+
+###  http://planificacion.org/poa#belongsToProject
+poa:belongsToProject rdf:type owl:ObjectProperty ;
+                     owl:inverseOf poa:hasOperationalActivity ;
+                     rdfs:domain poa:OperationalActivity;
+                     rdfs:range poa:Project ;
+		     rdfs:label "pertenece a proyecto"@es , "belongs to Proyect"@en ;
+    		     skos:prefLabel "pertenece a proyecto"@es , "belongs to Proyect"@en .
+
+###  http://planificacion.org/poa#belongsToSubprogram
+poa:belongsToSubprogram rdf:type owl:ObjectProperty ;
+                        owl:inverseOf poa:hasProject ;
+                        rdfs:domain poa:Project ;
+                        rdfs:range poa:Subprogram ;
+                        rdfs:label "pertenece al SubPrograma"@es , "belongs to SubProgram"@en ;
+                        skos:prefLabel "pertenece al SubPrograma"@es , "belongs to SubProgram"@en.
+
+
+
+###  http://planificacion.org/poa#hasBudgetedActivity
+poa:hasBudgetedActivity rdf:type owl:ObjectProperty ;
+                        rdfs:domain poa:OperationalActivity ;
+                        rdfs:range poa:BudgetedActivity .
+
+
+### http://planificacion.org/poa#hasCanton
+poa:hasCanton rdf:type owl:ObjectProperty ;
+  rdfs:domain poa:OperationalActivity ;
+  rdfs:range <http://www.geonames.org/ontology#Feature> ;
+  rdfs:label "has canton"@en , "tiene cantón"@es ;
+  skos:prefLabel "has canton"@en , "tiene cantón"@es ;
+  rdfs:comment "Enlace a la URI de GeoNames que representa un cantón."@es ,
+               "Link to the GeoNames URI representing a canton."@en .
+
+
+
+###  http://planificacion.org/poa#hasGoal
+poa:hasGoal rdf:type owl:ObjectProperty ;
+            rdfs:domain poa:Project ;
+            rdfs:range poa:Goal ;
+            rdfs:label "tiene meta"@es ;
+	    rdfs:label "has goal"@en ;
+	    skos:prefLabel "tiene meta"@es ;
+	    skos:prefLabel "has goal"@en .
+
+
+###  http://planificacion.org/poa#hasOperationalActivity
+poa:hasOperationalActivity rdf:type owl:ObjectProperty ;
+                           rdfs:domain poa:Project ;
+                           rdfs:range poa:OperationalActivity;
+                           rdfs:label "tiene actividad operativa"@es , "has operational activity"@en ;
+                           skos:prefLabel "tiene actividad operativa"@es , "has operational activity"@en .
+
+
+### http://planificacion.org/poa#hasParish
+poa:hasParish rdf:type owl:ObjectProperty ;
+  rdfs:domain poa:OperationalActivity;
+  rdfs:range <http://www.geonames.org/ontology#Feature> ;
+  rdfs:label "has parish"@en , "tiene parroquia"@es ;
+  skos:prefLabel "has parish"@en , "tiene parroquia"@es ;
+  rdfs:comment "Enlace a la URI de GeoNames que representa una parroquia."@es ,
+               "Link to the GeoNames URI representing a parish."@en .
+
+### http://planificacion.org/poa#locatedInProvince
+poa:locatedInProvince rdf:type owl:ObjectProperty ;
+    rdfs:domain poa:Location ;
+    rdfs:range owl:Thing ;
+    rdfs:label "está en provincia"@es ;
+    skos:prefLabel "está en provincia"@es ;
+    rdfs:label "located in province"@en ;
+    skos:prefLabel "located in province"@en ;
+    rdfs:comment "Enlaza una ubicación con la provincia correspondiente (GeoNames URI)."@es ,
+                 "Links a location with its corresponding province (GeoNames URI)."@en .
+
+### http://planificacion.org/poa#locatedInCanton
+poa:locatedInCanton rdf:type owl:ObjectProperty ;
+    rdfs:domain poa:Location ;
+    rdfs:range owl:Thing ;
+    rdfs:label "está en cantón"@es ;
+    skos:prefLabel "está en cantón"@es ;
+    rdfs:label "located in canton"@en ;
+    skos:prefLabel "located in canton"@en ;
+    rdfs:comment "Enlaza una ubicación con el cantón correspondiente (GeoNames URI)."@es ,
+                 "Links a location with its corresponding canton (GeoNames URI)."@en .
+
+### http://planificacion.org/poa#locatedInParish
+poa:locatedInParish rdf:type owl:ObjectProperty ;
+    rdfs:domain poa:Location ;
+    rdfs:range owl:Thing ;
+    rdfs:label "está en parroquia"@es ;
+    skos:prefLabel "está en parroquia"@es ;
+    rdfs:label "located in parish"@en ;
+    skos:prefLabel "located in parish"@en ;
+    rdfs:comment "Enlaza una ubicación con la parroquia correspondiente (GeoNames URI)."@es ,
+                 "Links a location with its corresponding parish (GeoNames URI)."@en .
+
+###  http://planificacion.org/poa#hasProgram
+poa:hasProgram rdf:type owl:ObjectProperty ;
+               rdfs:domain poa:AnnualOperationalPlan ;
+               rdfs:range poa:Program ;
+               rdfs:label "tiene programa"@es, "has program"@en ;
+               skos:prefLabel  "tiene programa"@es, "has program"@en .
+
+
+###  http://planificacion.org/poa#hasProject
+poa:hasProject rdf:type owl:ObjectProperty ;
+               rdfs:domain poa:Subprogram ;
+               rdfs:range poa:Project ;
+               rdfs:label "tiene proyecto"@es, "has project"@en ;
+               skos:prefLabel  "tiene proyecto"@es, "has project"@en .
+
+
+### http://planificacion.org/poa#hasProvince
+poa:hasProvince rdf:type owl:ObjectProperty ;
+  rdfs:domain poa:OperationalActivity ;
+  rdfs:range <http://www.geonames.org/ontology#Feature> ;
+  rdfs:label "has province"@en , "tiene provincia"@es ;
+  skos:prefLabel "has province"@en , "tiene provincia"@es ;
+  rdfs:comment "Enlace a la URI de GeoNames que representa una provincia."@es ,
+               "Link to the GeoNames URI representing a province."@en .
+
+###  http://planificacion.org/poa#hasSubprogram
+poa:hasSubprogram rdf:type owl:ObjectProperty ;
+                  rdfs:domain poa:Program ;
+                  rdfs:range poa:Subprogram ;
+                  rdfs:label "tiene subprograma"@es ;
+                  rdfs:label "has subprogram"@en ;
+                  skos:prefLabel "tiene subprograma"@es ;
+                  skos:prefLabel "has subprogram"@en .
+
+
+###  http://planificacion.org/poa#hasTemporalScope
+poa:hasTemporalScope rdf:type owl:ObjectProperty ;
+                     rdfs:domain poa:Project ;
+                     rdfs:range skos:Concept .
+
+
+###  http://planificacion.org/poa#hasWorkType
+poa:hasWorkType rdf:type owl:ObjectProperty ;
+  rdfs:domain poa:BudgetedActivity ;
+  rdfs:range skos:Concept ;
+  rdfs:label "tiene tipo de obra"@es ;
+  skos:prefLabel "tiene tipo de obra"@es ;
+  rdfs:label "has work type"@en ;
+  skos:prefLabel "has work type"@en .
+
+
+###  http://planificacion.org/poa#unitOfMeasure
+poa:unitOfMeasure rdf:type owl:ObjectProperty ;
+                  rdfs:domain poa:Goal ;
+                  rdfs:range poa:MeasurementUnit ;
+                  rdfs:label "Unidad de medida"@es , "Unit of measure"@en ;
+                  skos:prefLabel "Unidad de medida"@es , "Unit of measure"@en .
+
+
+###  http://planificacion.org/poa#hasFundingSource
+poa:hasFundingSource rdf:type owl:ObjectProperty ;
+                      rdfs:domain poa:BudgetedActivity ;
+    rdfs:range poa:FundingSource ;
+    rdfs:label "tiene fuente de financiamiento"@es ;
+    rdfs:label "has funding source"@en;
+    skos:prefLabel "tiene fuente de financiamiento"@es ;
+    skos:prefLabel "has funding source"@en .
+
+###  http://planificacion.org/poa#hasLocation
+poa:hasLocation rdf:type owl:ObjectProperty ;
+    rdfs:domain poa:BudgetedActivity ;
+    rdfs:range poa:Location ;
+    rdfs:label "has location"@en ;
+    skos:prefLabel "has location"@en ;
+    rdfs:label "tiene ubicación"@es ;
+    skos:prefLabel "tiene ubicación"@es ;
+    rdfs:comment "Relaciona una actividad presupuestaria con su ubicación geográfica estructurada."@es ,
+                 "Relates a budgeted activity with its structured geographic location."@en .
+
+
+###  http://purl.org/dc/terms/creator
+dcterms:creator rdf:type owl:ObjectProperty ;
+                rdfs:domain poa:AnnualOperationalPlan ;
+                rdfs:range foaf:Organization ;
+                rdfs:label "creador"@es , "creator"@en ;
+                skos:prefLabel "creador"@es , "creator"@en ;
+                rdfs:comment "Organización que elabora el Plan Operativo Anual."@es ,
+                "Organization that created the Annual Operational Plan."@en .
+
+
+###  http://www.w3.org/2000/01/rdf-schema#seeAlso
+rdfs:seeAlso rdf:type owl:ObjectProperty ;
+             rdfs:comment "Proporciona un enlace a otro recurso informativo o complementario."@es ;
+             rdfs:label "see also"@en ,
+                        "ver también"@es .
+
+
+###  http://www.w3.org/2002/07/owl#sameAs
+owl:sameAs rdf:type owl:ObjectProperty ;
+           rdfs:comment "Indica que este recurso es semánticamente idéntico a uno externo."@es ;
+           rdfs:label "es el mismo que"@es ,
+                      "is the same as"@en .
+
+
+###  http://www.w3.org/2004/02/skos/core#closeMatch
+skos:closeMatch rdf:type owl:ObjectProperty ;
+                rdfs:comment "Concepto similar, pero no estrictamente igual."@es ;
+                rdfs:label "close match"@en ,
+                           "coincide aproximadamente con"@es .
+
+
+###  http://www.w3.org/2004/02/skos/core#exactMatch
+skos:exactMatch rdf:type owl:ObjectProperty ;
+                rdfs:comment "Indica una correspondencia semántica total entre conceptos."@es ;
+                rdfs:label "coincide exactamente con"@es ,
+                           "exact match"@en .
+
+
+###  http://www.w3.org/2004/02/skos/core#inScheme
+skos:inScheme rdf:type owl:ObjectProperty ;
+              rdfs:domain poa:MeasurementUnit.
+
+
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://planificacion.org/poa#goalDescription
+poa:goalDescription rdf:type owl:DatatypeProperty ;
+                    rdfs:domain poa:Goal ;
+                    rdfs:range xsd:string ;
+                    rdfs:label "Descripción de la meta"@es ,
+                               "Goal description"@en .
+
+
+###  http://planificacion.org/poa#goalValue
+poa:goalValue rdf:type owl:DatatypeProperty ;
+              rdfs:domain poa:Goal ;
+              rdfs:range xsd:decimal;
+              rdfs:label "Valor de la meta"@es , "Goal value"@en ;
+              skos:prefLabel "Valor de la meta"@es , "Goal value"@en .
+
+
+###  http://planificacion.org/poa#hasCode
+poa:hasCode rdf:type owl:DatatypeProperty ;
+            rdfs:domain poa:BudgetedActivity ,
+                        poa:OperationalActivity ,
+                        poa:Program ,
+                        poa:Project ,
+                        poa:Subprogram ;
+            rdfs:range xsd:string ;
+            rdfs:label "Código"@es , "Code"@en ;
+            skos:prefLabel "Código"@es , "Code"@en .
+
+###  http://planificacion.org/poa#fundingSourceAmount
+poa:fundingSourceAmount a owl:DatatypeProperty ;
+    rdfs:domain poa:FundingSource;
+    rdfs:range xsd:decimal ;
+    rdfs:label "Monto de la fuente de financiamiento"@es ;
+    rdfs:label "Funding source amount"@en ;
+    skos:prefLabel "Monto de la fuente de financiamiento"@es ;
+    skos:prefLabel "Funding source amount"@en .
+
+
+###  http://planificacion.org/poa#fundingSourceCode
+poa:fundingSourceCode a owl:DatatypeProperty ;
+    rdfs:domain poa:FundingSource ;
+    rdfs:range xsd:string ;
+    rdfs:label "Código de fuente de financiamiento"@es ;
+    rdfs:label "Funding source code"@en ;
+    skos:prefLabel "Código de fuente de financiamiento"@es ;
+    skos:prefLabel "Funding source code"@en .
+
+###  http://planificacion.org/poa#fundingSourceType
+poa:fundingSourceType rdf:type owl:DatatypeProperty ;
+    rdfs:domain poa:FundingSource ;
+    rdfs:range xsd:string ;
+    rdfs:label "Tipo de fuente de financiamiento"@es ;
+    rdfs:label "Funding source type"@en .
+
+###  http://planificacion.org/poa#hasPoaIdentifier
+poa:hasPoaIdentifier rdf:type owl:DatatypeProperty ;
+                     rdfs:domain poa:AnnualOperationalPlan ;
+                     rdfs:range xsd:string ;
+                     rdfs:label "Identificador del POA"@es ,
+                                "POA Identifier"@en .
+
+
+###  http://planificacion.org/poa#organizationCode
+poa:organizationCode rdf:type owl:DatatypeProperty ;
+                     rdfs:domain foaf:Organization ;
+                     rdfs:range xsd:string ;
+                     rdfs:label "Código del GAD"@es ,
+                                "Organization code"@en .
+
+
+###  http://planificacion.org/poa#plannedAmountQuarter1
+poa:plannedAmountQuarter1 rdf:type owl:DatatypeProperty ;
+                          rdfs:domain poa:BudgetedActivity ;
+                          rdfs:range xsd:decimal ;
+                          rdfs:label "Monto planificado trimestre I"@es ,
+                                     "Planned amount quarter I"@en .
+
+
+###  http://planificacion.org/poa#plannedAmountQuarter2
+poa:plannedAmountQuarter2 rdf:type owl:DatatypeProperty ;
+                          rdfs:domain poa:BudgetedActivity ;
+                          rdfs:range xsd:decimal ;
+                          rdfs:label "Monto planificado trimestre II"@es ,
+                                     "Planned amount quarter II"@en .
+
+
+###  http://planificacion.org/poa#plannedAmountQuarter3
+poa:plannedAmountQuarter3 rdf:type owl:DatatypeProperty ;
+                          rdfs:domain poa:BudgetedActivity ;
+                          rdfs:range xsd:decimal ;
+                          rdfs:label "Monto planificado trimestre III"@es ,
+                                     "Planned amount quarter III"@en .
+
+
+###  http://planificacion.org/poa#plannedAmountQuarter4
+poa:plannedAmountQuarter4 rdf:type owl:DatatypeProperty ;
+                          rdfs:domain poa:BudgetedActivity ;
+                          rdfs:range xsd:decimal ;
+                          rdfs:label "Monto planificado trimestre IV"@es ,
+                                     "Planned amount quarter IV"@en .
+
+
+###  http://purl.org/dc/terms/issued
+dcterms:issued rdf:type owl:DatatypeProperty ;
+               rdfs:domain poa:AnnualOperationalPlan ;
+               rdfs:range xsd:gYear ;
+               rdfs:label "emitido en"@es , "issued in"@en ;
+               skos:prefLabel "emitido en"@es , "issued in"@en ;
+               rdfs:comment "Año de emisión del POA."@es ,
+               "Year when the POA was issued."@en .
+
+
+###  http://www.w3.org/2004/02/skos/core#notation
+skos:notation rdf:type owl:DatatypeProperty ;
+              rdfs:domain poa:MeasurementUnit ;
+              rdfs:range xsd:string ;
+              rdfs:label "notación"@es , "notation"@en ;
+              skos:prefLabel "notación"@es , "notation"@en ;
+              rdfs:comment "Forma abreviada o símbolo asociado a la unidad de medida."@es ,
+              "Short form or symbol associated with the measurement unit."@en .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://planificacion.org/poa#AnnualOperationalPlan
+poa:AnnualOperationalPlan rdf:type owl:Class ;
+                          rdfs:label "Annual Operational Plan 2025"@en ,
+                                     "Plan Operativo Anual 2025"@es .
+
+
+###  http://planificacion.org/poa#BudgetedActivity
+poa:BudgetedActivity rdf:type owl:Class ;
+                     rdfs:label "Actividad Presupuestada"@es ,
+                                "Budgeted Activity"@en .
+
+
+###  http://planificacion.org/poa#FundingSource
+poa:FundingSource rdf:type owl:Class ;
+                  rdfs:label "Fuente de financiamiento"@es ,
+                             "Funding Source"@en .
+
+
+###  http://planificacion.org/poa#Goal
+poa:Goal rdf:type owl:Class ;
+         rdfs:label "Goal"@en ,
+                    "Meta"@es .
+
+
+###  http://planificacion.org/poa#MeasurementUnit
+poa:MeasurementUnit rdf:type owl:Class ;
+                    rdfs:subClassOf skos:Concept ;
+                    skos:prefLabel "Measurement unit"@en ,
+                                   "Unidad de medida"@es .
+
+
+###  http://planificacion.org/poa#OperationalActivity
+poa:OperationalActivity rdf:type owl:Class ;
+                        rdfs:label "Actividad Operativa"@es ,
+                                   "Operational Activity"@en .
+
+
+###  http://planificacion.org/poa#Program
+poa:Program rdf:type owl:Class ;
+            rdfs:label "Program"@en ,
+                       "Programa"@es .
+
+
+###  http://planificacion.org/poa#Project
+poa:Project rdf:type owl:Class ;
+            rdfs:label "Project"@en ,
+                       "Proyecto"@es .
+
+
+###  http://planificacion.org/poa#Subprogram
+poa:Subprogram rdf:type owl:Class ;
+               rdfs:label "Subprogram"@en ,
+                          "Subprograma"@es .
+
+
+###  http://planificacion.org/poa#Location
+poa:Location rdf:type owl:Class ;
+    rdfs:label "Ubicación geográfica"@es ;
+    skos:prefLabel "Ubicación geográfica"@es ;
+    rdfs:label "Geographic location"@en ;
+    skos:prefLabel "Geographic location"@en ;
+    rdfs:comment "Clase que representa una ubicación estructurada con referencia a provincia, cantón y parroquia."@es ,
+                 "Class representing a structured location referring to province, canton and parish."@en .
+
+
+
+
+###  http://www.w3.org/2004/02/skos/core#Concept
+skos:Concept rdf:type owl:Class .
+
+
+###  http://www.w3.org/2004/02/skos/core#ConceptScheme
+skos:ConceptScheme rdf:type owl:Class .
+
+
+###  http://xmlns.com/foaf/0.1/Organization
+foaf:Organization rdf:type owl:Class ;
+                  rdfs:label "Decentralized Autonomous Government"@en ,
+                             "Gobierno Autónomo Descentralizado"@es .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://planificacion.org/poa#MeasurementUnitScheme
+poa:MeasurementUnitScheme rdf:type owl:NamedIndividual ,
+                                   skos:ConceptScheme ;
+                          skos:prefLabel "Esquema de unidades de medida"@es ,
+                                         "Measurement Unit Scheme"@en .
+
+
+###################################################################
+# CubeViz
+###################################################################
+
+## Declara el conjunto de datos ##
+poa:POA2025 a qb:DataSet ;
+    rdfs:label "Plan Operativo Anual 2025"@es ;
+    dcterms:type poa:AnnualOperationalPlan ;
+    qb:structure poa:POAStructure .
+
+### http://planificacion.org/poa#observesBudgetedActivity
+poa:observesBudgetedActivity rdf:type owl:ObjectProperty ;
+    rdfs:domain qb:Observation ;
+    rdfs:range poa:BudgetedActivity ;
+    rdfs:label "observa actividad presupuestada"@es , "observes budgeted activity"@en ;
+    skos:prefLabel "observa actividad presupuestada"@es , "observes budgeted activity"@en ;
+    rdfs:comment "Relaciona una observación con la actividad presupuestada a la que se refiere."@es ,
+                 "Links an observation to the budgeted activity it refers to."@en .
+
+
+poa:ComponentObservedActivity a qb:ComponentSpecification ;
+    qb:dimension poa:observesBudgetedActivity ;
+    rdfs:label "Actividad presupuestada observada"@es ;
+    rdfs:label "Observed budgeted activity"@en ;
+    rdfs:comment "Vínculo desde una observación hacia la actividad presupuestaria que representa."@es .
+
+
+###########################################################################
+##### Declaran qué propiedades del modelo se usan como ejes o métricas ####
+###########################################################################
+
+poa:fundingSourceAmount a qb:MeasureProperty ;
+    rdfs:label "Monto de la fuente de financiamiento"@es ;
+    rdfs:label "Funding source amount"@en ;
+    rdfs:range xsd:decimal .
+
+poa:ComponentAmount a qb:ComponentSpecification ;
+    rdfs:label "Monto de la fuente de financiamiento"@es ;
+    rdfs:label "Funding source amount"@en ;
+    qb:measure poa:fundingSourceAmount ;
+    rdfs:comment "Valor monetario asignado a la actividad presupuestaria en el POA."@es .
+
+poa:ComponentCode a qb:ComponentSpecification ;
+    rdfs:label "Código de actividad presupuestaria"@es ;
+    rdfs:label "Budgeted activity code"@en;
+    qb:dimension poa:hasCode ;
+    rdfs:comment "Código que identifica a cada actividad presupuestaria dentro del POA."@es .
+
+poa:ComponentProvince a qb:ComponentSpecification ;
+    rdfs:label "Provincia"@es ;
+    rdfs:label "Province"@en ;
+    qb:dimension poa:hasProvince ;
+    rdfs:comment "Provincia donde se ejecuta la actividad, usando URI de GeoNames."@es .
+
+poa:ComponentCanton a qb:ComponentSpecification ;
+    rdfs:label "Cantón"@es ;
+    rdfs:label "Canton"@en ;
+    qb:dimension poa:hasCanton ;
+    rdfs:comment "Cantón donde se ejecuta la actividad, usando URI de GeoNames."@es .
+
+poa:ComponentParish a qb:ComponentSpecification ;
+    rdfs:label "Parroquia"@es ;
+    rdfs:label "Parish"@en ;
+    qb:dimension poa:hasParish ;
+    rdfs:comment "Parroquia donde se ejecuta la actividad, usando URI de GeoNames."@es .
+
+poa:ComponentWorkType a qb:ComponentSpecification ;
+    rdfs:label "Tipo de obra"@es ;
+    rdfs:label "Work type"@en ;
+    qb:dimension poa:hasWorkType ;
+    rdfs:comment "Clasificación de la actividad según el tipo de obra (ej. pavimentación, estudios, mantenimiento)."@es .
+
+poa:ComponentActivityLabel a qb:ComponentSpecification ;
+    rdfs:label "Nombre de la actividad presupuestaria"@es ;
+    rdfs:label "Budgeted activity name"@en ;
+    qb:dimension rdfs:label ;
+    rdfs:comment "Etiqueta con el nombre de la actividad presupuestaria, usada para identificarla en visualizaciones."@es .
+
+poa:ComponentLocation a qb:ComponentSpecification ;
+    qb:dimension poa:hasLocation ;
+    rdfs:label "Ubicación general de la actividad"@es ;
+    rdfs:label "Activity location"@en ;
+    rdfs:comment "Vínculo a un recurso de ubicación cuando se usa un nodo intermedio Location."@es .
+###############################################################################
+
+
+## Define las dimensiones y medidas ##
+
+
+poa:POAStructure a qb:DataStructureDefinition ;
+    rdfs:label "Estructura del conjunto de datos POA"@es ;
+    qb:component
+        poa:ComponentObservedActivity, 
+        poa:ComponentAmount,
+        poa:ComponentCode,
+        poa:ComponentLocation,
+        poa:ComponentWorkType,
+        poa:ComponentActivityLabel,
+        poa:ComponentProvince,
+        poa:ComponentCanton,
+        poa:ComponentParish ;
+    rdfs:comment "Define las dimensiones y medidas de las observaciones del Plan Operativo Anual 2025."@es .
+
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
