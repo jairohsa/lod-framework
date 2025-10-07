@@ -1,6 +1,6 @@
 # Publicación de Datos Abiertos Enlazados del POA - Ejemplo 2025
 
-Este repositorio contiene un ejemplo práctico de cómo transformar y publicar como datos abiertos enlazados (Linked Open Data) la información del Plan Operativo Anual (POA) de un Gobierno Autónomo Descentralizado (GAD) en Ecuador. Los datos son una muestra que ha sido modificada con fines investigativos por lo tanto no se deb considerar como datos oficiales de una institución.
+Este repositorio contiene un ejemplo práctico de cómo transformar y publicar como datos abiertos enlazados (Linked Open Data) la información del Plan Operativo Anual (POA) de un Gobierno Autónomo Descentralizado (GAD) en Ecuador. Los datos son una muestra que ha sido modificada con fines investigativos por lo tanto no se debe considerar como datos oficiales de una institución.
 
 ---
 
